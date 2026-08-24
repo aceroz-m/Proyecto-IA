@@ -1,7 +1,7 @@
 import os
 
 class Grafo:
-    def cargar_laberinto(ruta_archivo):
+    def cargarLaberinto(ruta_archivo):
         matriz = []
         inicio = None
         meta = None
@@ -38,6 +38,31 @@ class Grafo:
                         meta = (i, j)
                     
         return matriz, inicio, meta
+    
+    def matrizAdyacencia(matriz):
+        filas = len(matriz)
+        columnas = len(matriz[0])
+        lista_adyacencia = {}
+        
+        movimientos = [(-1, 0), (1, 0), (0, -1), (0, 1)] # Arriba, Abajo, Izquierda, Derecha
+        
+        for r in range(filas):
+            for c in range(columnas):
+                # Omitir paredes (1)
+                if matriz[r][c] == 1:
+                    continue
+                
+                nodo_actual = (r, c)
+                lista_adyacencia[nodo_actual] = []
+                
+                for dr, dc in movimientos:
+                    nr, nc = r + dr, c + dc
+                    if 0 <= nr < filas and 0 <= nc < columnas:
+                        if matriz[nr][nc] != 1:
+                            # Estructura del grafo ponderado: (nodo_destino, peso)
+                            lista_adyacencia[nodo_actual].append(((nr, nc), 1))
+                            
+        return lista_adyacencia
 
     def __init__(self, lista_adyacencia):
         self.lista_adyacencia = lista_adyacencia
@@ -68,7 +93,8 @@ if __name__ == "__main__":
     ruta_txt = os.path.join(directorio_actual, "laberinto.txt")
 
     
-    matriz, inicio, meta = Grafo.cargar_laberinto(ruta_txt)
+    matriz, inicio, meta = Grafo.cargarLaberinto(ruta_txt)
 
-    print("Nodo Inicio (2):", inicio)
-    print("Nodo Meta (3):", meta)
+    print("Nodo Inicio:", inicio)
+    print("Nodo Meta:", meta)
+    lista_adyacencia = Grafo.matrizAdyacencia(matriz)
