@@ -1,42 +1,15 @@
 import os
+import ast
+
+from a_plus import a_plus
 
 class Grafo:
     def cargarLaberinto(ruta_archivo):
-        matriz = []
-        inicio = None
-        meta = None
-        
         with open(ruta_archivo, 'r') as f:
-            for i, linea in enumerate(f):
-                # Limpiar caracteres
-                linea_limpia = (
-                    linea.strip()
-                    .replace('[', '')
-                    .replace(']', '')
-                    .replace('(', '')
-                    .replace(')', '')
-                    .replace(',', ' ')
-                    .replace("'", '')
-                    .replace('"', '')
-                )
-                
-                if not linea_limpia:
-                    continue
-                    
-                # Convertir a enteros solo los elementos que contengan dígitos válidos
-                fila = [int(val) for val in linea_limpia.split() if val.isdigit()]
-                
-                if not fila:
-                    continue
-                    
-                matriz.append(fila)
-                
-                for j, val in enumerate(fila):
-                    if val == 2:
-                        inicio = (i, j)
-                    elif val == 3:
-                        meta = (i, j)
-                    
+               matriz = [ast.literal_eval(line.strip()) for line in f if line.strip().startswith('[')]
+
+        inicio = next((r, c) for r, row in enumerate(matriz) for c, v in enumerate(row) if v == 2)
+        meta = next((r, c) for r, row in enumerate(matriz) for c, v in enumerate(row) if v == 3)
         return matriz, inicio, meta
     
     def matrizAdyacencia(matriz):
@@ -60,7 +33,7 @@ class Grafo:
                     if 0 <= nr < filas and 0 <= nc < columnas:
                         if matriz[nr][nc] != 1:
                             # Estructura del grafo ponderado: (nodo_destino, peso)
-                            lista_adyacencia[nodo_actual].append(((nr, nc), 1))
+                            lista_adyacencia[nodo_actual].append(((nr, nc)))
                             
         return lista_adyacencia
 
@@ -70,22 +43,15 @@ class Grafo:
     def obtener_vecinos(self, v):
         return self.lista_adyacencia[v]
 
-    # funcion heuristica
-    def h(self, n):
-        #inserte su codigo aqui
-        return H[n] # puede retornar una lista con el calculo de la heuristica para cada estado
-
-    def primero_profundidad(self, nodo_inicio, nodo_final):
+    def primero_profundidad(lista_adyacencia, nodo_inicio, nodo_final):
     #inserte si codigo aqui
         return None
         
-    def primero_anchura(self, nodo_inicio, nodo_final):
-    #inserte si codigo aqui
+    def primero_anchura(lista_adyacencia, nodo_inicio, nodo_final):
         return None
-    
-    def a_estrella(self, nodo_inicio, nodo_final):
-    #inserte si codigo aqui
-        return None
+
+    def a_estrella(lista_adyacencia, nodo_inicio, nodo_final):
+        return a_plus(lista_adyacencia, nodo_inicio, nodo_final )
     
 if __name__ == "__main__":
     directorio_actual = os.path.dirname(os.path.abspath(__file__))
@@ -98,3 +64,4 @@ if __name__ == "__main__":
     print("Nodo Inicio:", inicio)
     print("Nodo Meta:", meta)
     lista_adyacencia = Grafo.matrizAdyacencia(matriz)
+    print(Grafo.a_estrella(lista_adyacencia, inicio, meta))
