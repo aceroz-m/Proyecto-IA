@@ -19,10 +19,10 @@ def f(g, nodo, lista_h):
 
 
 
-def a_plus(lista_adjacencia, inicio, meta):
+def a_plus(lista_adyacencia, inicio, meta):
 
     # Lista de nodos y calculo de heuristica
-    nodos = [n for n, _ in lista_adjacencia.items()]
+    nodos = [n for n, _ in lista_adyacencia.items()]
     lista_h = calcular_heuristica(nodos, meta)
 
     # Lista de padres para reconstruir el camino
@@ -47,7 +47,7 @@ def a_plus(lista_adjacencia, inicio, meta):
 
         # Actualziacion de funcion g
         nuevo_g = g[u] + 1
-        for v in lista_adjacencia[u]:
+        for v in lista_adyacencia[u]:
 
             # Si el nodo no ha sido visitado, o si se llega a este nodo de manera mas eficiente
             if v not in g or nuevo_g < g[v]:
