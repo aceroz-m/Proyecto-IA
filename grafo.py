@@ -2,6 +2,7 @@ import os
 import ast
 
 from a_plus import a_plus
+from bfs import bfs
 
 class Grafo:
     def cargarLaberinto(ruta_archivo):
@@ -12,7 +13,7 @@ class Grafo:
         meta = next((r, c) for r, row in enumerate(matriz) for c, v in enumerate(row) if v == 3)
         return matriz, inicio, meta
     
-    def matrizAdyacencia(matriz):
+    def listaAdyacencia(matriz):
         filas = len(matriz)
         columnas = len(matriz[0])
         lista_adyacencia = {}
@@ -48,10 +49,10 @@ class Grafo:
         return None
         
     def primero_anchura(lista_adyacencia, nodo_inicio, nodo_final):
-        return None
+        return bfs(lista_adyacencia, nodo_inicio, nodo_final)
 
     def a_estrella(lista_adyacencia, nodo_inicio, nodo_final):
-        return a_plus(lista_adyacencia, nodo_inicio, nodo_final )
+        return a_plus(lista_adyacencia, nodo_inicio, nodo_final)
     
 if __name__ == "__main__":
     directorio_actual = os.path.dirname(os.path.abspath(__file__))
@@ -63,5 +64,6 @@ if __name__ == "__main__":
 
     print("Nodo Inicio:", inicio)
     print("Nodo Meta:", meta)
-    lista_adyacencia = Grafo.matrizAdyacencia(matriz)
-    print(Grafo.a_estrella(lista_adyacencia, inicio, meta))
+    lista_adyacencia = Grafo.listaAdyacencia(matriz)
+    print("A*= ", Grafo.a_estrella(lista_adyacencia, inicio, meta))
+    print("BFS= ", Grafo.primero_anchura(lista_adyacencia, inicio, meta))
