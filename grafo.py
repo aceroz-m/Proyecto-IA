@@ -3,6 +3,7 @@ import ast
 
 from a_plus import a_plus
 from bfs import bfs
+from dfs import dfs
 
 class Grafo:
     def cargarLaberinto(ruta_archivo):
@@ -45,8 +46,7 @@ class Grafo:
         return self.lista_adyacencia[v]
 
     def primero_profundidad(lista_adyacencia, nodo_inicio, nodo_final):
-    #inserte si codigo aqui
-        return None
+        return dfs(lista_adyacencia, nodo_inicio, nodo_final)
         
     def primero_anchura(lista_adyacencia, nodo_inicio, nodo_final):
         return bfs(lista_adyacencia, nodo_inicio, nodo_final)
@@ -67,3 +67,4 @@ if __name__ == "__main__":
     lista_adyacencia = Grafo.listaAdyacencia(matriz)
     print("A*= ", Grafo.a_estrella(lista_adyacencia, inicio, meta))
     print("BFS= ", Grafo.primero_anchura(lista_adyacencia, inicio, meta))
+    print("DFS= ", Grafo.primero_profundidad(lista_adyacencia, inicio, meta))
