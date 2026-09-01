@@ -29,7 +29,7 @@ def bfs(listaAdyacencia, nodoInicio, nodoFinal):
             # Volteamos el camino
             camino.reverse()
             # Devolvemos el camino
-            return camino
+            return camino, len(visitados) # Devolvemos el camino y la cantidad de nodos visitados
 
         # Si no es el final del camino, tomamos los vecinos del nodo actual
         for vecino in listaAdyacencia[nodoActual]:
@@ -41,4 +41,4 @@ def bfs(listaAdyacencia, nodoInicio, nodoFinal):
                 # Ponemos en la cola de pendientes por visitar al vecino
                 colaPendientes.append(vecino)
 
-    return None
+    return None, len(visitados) # Si no encontramos un camino, devolvemos None y la cantidad de nodos visitados

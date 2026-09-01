@@ -62,9 +62,22 @@ if __name__ == "__main__":
     
     matriz, inicio, meta = Grafo.cargarLaberinto(ruta_txt)
 
+    print("------------------------")
     print("Nodo Inicio:", inicio)
     print("Nodo Meta:", meta)
+    print("------------------------")
+
     lista_adyacencia = Grafo.listaAdyacencia(matriz)
-    print("A*= ", Grafo.a_estrella(lista_adyacencia, inicio, meta))
-    print("BFS= ", Grafo.primero_anchura(lista_adyacencia, inicio, meta))
-    print("DFS= ", Grafo.primero_profundidad(lista_adyacencia, inicio, meta))
+
+    print("A*")
+    print("Nodos visitados: ", Grafo.a_estrella(lista_adyacencia, inicio, meta)[1])
+    print("Camino: ", Grafo.a_estrella(lista_adyacencia, inicio, meta)[0])
+    print("------------------------")
+    print("BFS")
+    print("Nodos visitados: ", Grafo.primero_anchura(lista_adyacencia, inicio, meta)[1])
+    print("Camino: ", Grafo.primero_anchura(lista_adyacencia, inicio, meta)[0])
+    print("------------------------")
+    print("DFS") 
+    print("Nodos visitados: ", Grafo.primero_profundidad(lista_adyacencia, inicio, meta)[1])
+    print("Camino: ", Grafo.primero_profundidad(lista_adyacencia, inicio, meta)[0])
+    print("------------------------")

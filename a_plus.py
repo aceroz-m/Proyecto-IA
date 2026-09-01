@@ -38,8 +38,16 @@ def a_plus(lista_adyacencia, inicio, meta):
     # Metodo de python para usar una cola de prioridad
     heapq.heappush(pq, (f(g, inicio, lista_h), inicio))
 
+    # Conjunto para rastrear nodos expandidos
+    visitados = set()
+
     while pq:
         _, u = heapq.heappop(pq)
+
+        if u in visitados:
+            continue
+
+        visitados.add(u)
 
         # Camino encontrado
         if u == meta:
@@ -64,4 +72,4 @@ def a_plus(lista_adyacencia, inicio, meta):
         it = padres.get(it)
 
     camino.reverse()
-    return camino
+    return camino, len(visitados)

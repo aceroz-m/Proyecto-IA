@@ -2,13 +2,14 @@ def dfs(listaAdyacencia, nodoInicio, nodoFinal):
     # Pila de nodos por visitar (LIFO, a diferencia de la cola del BFS)
     pilaPendientes = [nodoInicio]
     # Set de nodos visitados
-    visitados = {nodoInicio}
+    visitados = set()
     # Mapa de padres
     padres = {nodoInicio: None}
 
     while pilaPendientes:
         # Tomamos el último nodo agregado y lo eliminamos
         nodoActual = pilaPendientes.pop()
+        visitados.add(nodoActual)
 
         if nodoActual == nodoFinal:
             camino = []
@@ -19,12 +20,11 @@ def dfs(listaAdyacencia, nodoInicio, nodoFinal):
                 actual = padres[actual]
 
             camino.reverse()
-            return camino
+            return camino, len(visitados)
 
         for vecino in listaAdyacencia[nodoActual]:
             if vecino not in visitados:
-                visitados.add(vecino)
                 padres[vecino] = nodoActual
                 pilaPendientes.append(vecino)
 
-    return None
+    return None, len(visitados)
