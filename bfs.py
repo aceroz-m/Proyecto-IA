@@ -14,21 +14,31 @@ def bfs(listaAdyacencia, nodoInicio, nodoFinal):
         # Tomamos el nodo de enfrente y lo eliminamos (esto me parece re ilegal)
         nodoActual = colaPendientes.popleft() 
 
+        # Si hemos encontrado el final del camino
         if nodoActual == nodoFinal:
+            # Creamos un camino
             camino = []
+            # Definimos un nodo actual que es el nodo final
             actual = nodoFinal
 
+            # Mientras el nodo actual no sea None, agregamos el nodo actual al camino y actualizamos el nodo actual al padre del nodo actual
             while actual is not None:
                 camino.append(actual)
                 actual = padres[actual]
 
+            # Volteamos el camino
             camino.reverse()
+            # Devolvemos el camino
             return camino
 
+        # Si no es el final del camino, tomamos los vecinos del nodo actual
         for vecino in listaAdyacencia[nodoActual]:
+            # Si el vecino no ha sido visitado lo agregamos a la cola
             if vecino not in visitados:
                 visitados.add(vecino)
+                # Agregamos el nodo actual como padre del vecino
                 padres[vecino] = nodoActual
+                # Ponemos en la cola de pendientes por visitar al vecino
                 colaPendientes.append(vecino)
 
     return None
