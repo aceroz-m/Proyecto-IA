@@ -57,7 +57,10 @@ class Grafo:
 if __name__ == "__main__":
     directorio_actual = os.path.dirname(os.path.abspath(__file__))
     directorio_actual = os.path.dirname(os.path.abspath(__file__))
-    ruta_txt = os.path.join(directorio_actual, "laberinto.txt")
+
+    ruta = input("Ingrese el nombre del archivo: ")
+    path = os.path.join(directorio_actual, ruta)
+    ruta_txt = os.path.join(directorio_actual, ruta)
 
     
     matriz, inicio, meta = Grafo.cargarLaberinto(ruta_txt)
@@ -71,13 +74,16 @@ if __name__ == "__main__":
 
     print("A*")
     print("Nodos visitados: ", Grafo.a_estrella(lista_adyacencia, inicio, meta)[1])
+    print("Tamaño del camino: ", len(Grafo.a_estrella(lista_adyacencia, inicio, meta)[0]))
     print("Camino: ", Grafo.a_estrella(lista_adyacencia, inicio, meta)[0])
     print("------------------------")
     print("BFS")
     print("Nodos visitados: ", Grafo.primero_anchura(lista_adyacencia, inicio, meta)[1])
+    print("Tamaño del camino: ", len(Grafo.primero_anchura(lista_adyacencia, inicio, meta)[0]))
     print("Camino: ", Grafo.primero_anchura(lista_adyacencia, inicio, meta)[0])
     print("------------------------")
     print("DFS") 
     print("Nodos visitados: ", Grafo.primero_profundidad(lista_adyacencia, inicio, meta)[1])
+    print("Tamaño del camino: ", len(Grafo.primero_profundidad(lista_adyacencia, inicio, meta)[0]))
     print("Camino: ", Grafo.primero_profundidad(lista_adyacencia, inicio, meta)[0])
     print("------------------------")
