@@ -23,7 +23,6 @@ class Grafo:
         
         for r in range(filas):
             for c in range(columnas):
-                # Omitir paredes (1)
                 if matriz[r][c] == 1:
                     continue
                 
@@ -35,7 +34,7 @@ class Grafo:
                     if 0 <= nr < filas and 0 <= nc < columnas:
                         if matriz[nr][nc] != 1:
                             # Estructura del grafo ponderado: (nodo_destino, peso)
-                            lista_adyacencia[nodo_actual].append(((nr, nc)))
+                            lista_adyacencia[nodo_actual].append(((nr, nc), 1))
                             
         return lista_adyacencia
 

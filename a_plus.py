@@ -7,10 +7,9 @@ def h(nodo, meta):
     return abs(nodo[0] - meta[0]) + abs(nodo[1] - meta[1])
 
 def calcular_heuristica(nodos, meta):
-    # Funcion de conveniencia para inicializar una lista con la funcion h
     lista_h = {}
-    for n in nodos:
-        lista_h[n] = h(n, meta)
+    for nodo in nodos:
+        lista_h[nodo] = h(nodo, meta)
     return lista_h
 
 def f(g, nodo, lista_h):
@@ -22,7 +21,7 @@ def f(g, nodo, lista_h):
 def a_plus(lista_adyacencia, inicio, meta):
 
     # Lista de nodos y calculo de heuristica
-    nodos = [n for n, _ in lista_adyacencia.items()]
+    nodos = list(lista_adyacencia.keys())
     lista_h = calcular_heuristica(nodos, meta)
 
     # Lista de padres para reconstruir el camino
@@ -54,22 +53,25 @@ def a_plus(lista_adyacencia, inicio, meta):
             break
 
         # Actualziacion de funcion g
-        nuevo_g = g[u] + 1
-        for v in lista_adyacencia[u]:
+        for item in lista_adyacencia[u]:
+            v = item[0] if isinstance(item, (tuple, list)) and isinstance(item[0], tuple) else item
+            peso = item[1] if isinstance(item, (tuple, list)) and len(item) >= 2 else 1
+            nuevo_g = g[u] + peso
 
             # Si el nodo no ha sido visitado, o si se llega a este nodo de manera mas eficiente
             if v not in g or nuevo_g < g[v]:
                 g[v] = nuevo_g
                 padres[v] = u
-                heapq.heappush(pq, (f(g, v, lista_h),v))
+                heapq.heappush(pq, (f(g, v, lista_h), v))
 
     camino = []
 
     # Reconstruccion del camino
-    it = meta
-    while it is not None:
-        camino.append(it)
-        it = padres.get(it)
+    if meta in padres:
+        it = meta
+        while it is not None:
+            camino.append(it)
+            it = padres.get(it)
 
-    camino.reverse()
+        camino.reverse()
     return camino, len(visitados)

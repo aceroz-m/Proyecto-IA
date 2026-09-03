@@ -22,7 +22,8 @@ def dfs(listaAdyacencia, nodoInicio, nodoFinal):
             camino.reverse()
             return camino, len(visitados)
 
-        for vecino in listaAdyacencia[nodoActual]:
+        for item in listaAdyacencia[nodoActual]:
+            vecino = item[0] if isinstance(item, (tuple, list)) and isinstance(item[0], tuple) else item
             if vecino not in visitados:
                 padres[vecino] = nodoActual
                 pilaPendientes.append(vecino)

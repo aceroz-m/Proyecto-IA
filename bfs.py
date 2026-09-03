@@ -32,7 +32,8 @@ def bfs(listaAdyacencia, nodoInicio, nodoFinal):
             return camino, len(visitados) # Devolvemos el camino y la cantidad de nodos visitados
 
         # Si no es el final del camino, tomamos los vecinos del nodo actual
-        for vecino in listaAdyacencia[nodoActual]:
+        for item in listaAdyacencia[nodoActual]:
+            vecino = item[0] if isinstance(item, (tuple, list)) and isinstance(item[0], tuple) else item
             # Si el vecino no ha sido visitado lo agregamos a la cola
             if vecino not in visitados:
                 visitados.add(vecino)
